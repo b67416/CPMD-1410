@@ -8,20 +8,24 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
+        android:label="Project Hours"
         android:theme="@style/AppTheme" >
         <activity
             android:name=".LoginActivity"
-            android:label="@string/app_name" >
+            android:label="Login" >
+        </activity>
+        <activity
+            android:name=".RegisterAccountActivity"
+            android:label="Register Account" >
+        </activity>
+        <activity
+            android:name=".ProjectHoursActivity"
+            android:label="Project Hours" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".RegisterAccountActivity"
-            android:label="@string/title_activity_register_account" >
         </activity>
     </application>
 

@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.ryanwahle.projecthours.ProjectHoursActivity" >
+    <item android:id="@+id/projectHours_menu_logOut"
+        android:title="Log Out"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
+
+    <item android:id="@+id/projectHours_menu_addProjectHours"
+        android:icon="@drawable/ic_action_new"
+        android:title="Add Project Hours"
+        android:showAsAction="ifRoom" />
+
+</menu>

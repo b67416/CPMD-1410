@@ -15,17 +15,19 @@ import com.parse.SignUpCallback;
 
 
 public class RegisterAccountActivity extends Activity {
+    EditText editTextUserName = null;
+    EditText editTextPassword = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_account);
+
+        editTextUserName = (EditText) findViewById(R.id.registerAccount_editText_userName);
+        editTextPassword = (EditText) findViewById(R.id.registerAccount_editText_password);
     }
 
     public void onClick_registerAccount_button_createAccount(View view) {
-        EditText editTextUserName = (EditText) findViewById(R.id.registerAccount_editText_userName);
-        EditText editTextPassword = (EditText) findViewById(R.id.registerAccount_editText_password);
-
         ParseUser registerAccountParseUser = new ParseUser();
 
         registerAccountParseUser.setUsername(editTextUserName.getText().toString());
@@ -46,13 +48,5 @@ public class RegisterAccountActivity extends Activity {
 
     public void onClick_registerAccount_button_cancel(View view) {
         finish();
-    }
-
-    @Override
-    public void finish() {
-
-        Log.v("RegisterAccountActivity", "finished");
-
-        super.finish();
     }
 }

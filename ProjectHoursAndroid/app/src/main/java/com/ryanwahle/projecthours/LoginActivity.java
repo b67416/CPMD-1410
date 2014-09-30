@@ -5,28 +5,44 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 
-import com.parse.Parse;
-
+import com.parse.LogInCallback;
+import com.parse.ParseException;
+import com.parse.ParseUser;
 
 public class LoginActivity extends Activity {
+    EditText editTextUserName = null;
+    EditText editTextPassword = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Parse.initialize(this, "RR1lRRpSMCJU7r4M0WPkpKJ8q9divyVGvc9JquK3", "WLyE29A8QpJqXPIBEYeXz9y9qZ7fUmTI3j8pPbK6");
-
         setContentView(R.layout.activity_login);
+
+        editTextUserName = (EditText) findViewById(R.id.login_editText_userName);
+        editTextPassword = (EditText) findViewById(R.id.login_editText_password);
     }
 
     public void onClick_login_button_signIn(View view) {
         Log.v("login_button_signIn", "clicked");
+
+        ParseUser.logInInBackground(editTextUserName.getText().toString(), editTextPassword.getText().toString(), new LogInCallback() {
+            @Override
+            public void done(ParseUser parseUser, ParseException e) {
+                if (parseUser == null) {
+                    Log.v("Login Failed!", e.toString());
+                } else {
+                    Log.v("Login Succeeded!", "YES!");
+                    Intent projectHoursIntent = new Intent(getApplicationContext(), ProjectHoursActivity.class);
+                    startActivity(projectHoursIntent);
+                    finish();
+                }
+            }
+        });
     }
 
     public void onClick_login_button_register(View view) {
-        Log.v("login_button_register", "clicked");
-
         Intent registerAccountIntent = new Intent(this, RegisterAccountActivity.class);
         startActivityForResult(registerAccountIntent, 0);
     }
