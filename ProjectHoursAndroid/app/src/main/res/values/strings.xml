@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Project Hours</string>
+    <string name="title_activity_register_account">Register Account</string>
+
+</resources>
