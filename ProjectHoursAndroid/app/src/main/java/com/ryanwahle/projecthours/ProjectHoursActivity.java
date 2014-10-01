@@ -78,8 +78,13 @@ public class ProjectHoursActivity extends Activity {
                         HashMap<String, String> projectHoursHashMap = new HashMap<String, String>();
                         projectHoursHashMap.put("objectId", entryObjectID);
                         projectHoursHashMap.put("projectName", entryProjectName);
-                        projectHoursHashMap.put("hoursWorked", entryHoursWorked.toString());
-                        projectHoursHashMap.put("projectComplete", entryProjectComplete.toString());
+                        projectHoursHashMap.put("hoursWorked", entryHoursWorked.toString() + " hours worked");
+
+                        if (entryProjectComplete) {
+                            projectHoursHashMap.put("projectComplete", "Completed");
+                        } else {
+                            projectHoursHashMap.put("projectComplete", "Not Completed");
+                        }
 
                         projectHoursArrayList.add(projectHoursHashMap);
                     }
