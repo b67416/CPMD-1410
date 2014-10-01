@@ -1,16 +1,22 @@
 package com.ryanwahle.projecthours;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import com.parse.DeleteCallback;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -64,22 +70,16 @@ public class ProjectHoursActivity extends Activity {
             public void done(List<ParseObject> projectHoursList, ParseException e) {
                 if (e == null) {
                     for (ParseObject projectHoursParseObject : projectHoursList) {
-                        //Log.v("Found Object", projectHoursParseObject.toString());
-
-                        //Log.v("Project Name:", projectHoursParseObject.getString("projectName"));
-                        //Log.v("Hours Worked:", "" + projectHoursParseObject.getInt("hoursWorked"));
-                        //Log.v("Project Completed:", "" + projectHoursParseObject.getBoolean("projectComplete"));
-
+                        String entryObjectID = projectHoursParseObject.getObjectId();
                         String entryProjectName = projectHoursParseObject.getString("projectName");
                         Integer entryHoursWorked = projectHoursParseObject.getInt("hoursWorked");
                         Boolean entryProjectComplete = projectHoursParseObject.getBoolean("projectComplete");
 
                         HashMap<String, String> projectHoursHashMap = new HashMap<String, String>();
+                        projectHoursHashMap.put("objectId", entryObjectID);
                         projectHoursHashMap.put("projectName", entryProjectName);
                         projectHoursHashMap.put("hoursWorked", entryHoursWorked.toString());
                         projectHoursHashMap.put("projectComplete", entryProjectComplete.toString());
-
-                        Log.v("boolean", entryProjectComplete.toString());
 
                         projectHoursArrayList.add(projectHoursHashMap);
                     }
@@ -89,11 +89,56 @@ public class ProjectHoursActivity extends Activity {
 
                     SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), projectHoursArrayList, R.layout.layout_project_hours_listview_row, mapFrom, mapTo);
                     projectHoursListView.setAdapter(adapter);
+
+                    projectHoursListView.setOnItemLongClickListener(deleteListItem());
+
                 } else {
                     Log.d("getProjectHourDataFromParse()", "Error: " + e.getMessage());
                 }
             }
         });
+    }
+
+    protected AdapterView.OnItemLongClickListener deleteListItem() {
+        return new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                final HashMap<String, String> projectHoursParseObject = projectHoursArrayList.get(position);
+
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(ProjectHoursActivity.this);
+                alertDialog.setTitle("Delete Project Hours");
+                alertDialog.setMessage("Are you sure you want to delete this project hour entry?");
+                alertDialog.setNegativeButton("No", null);
+
+                alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        //projectHoursArrayList.remove(position);
+
+                        ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("ProjectHours");
+                        parseQuery.getInBackground(projectHoursParseObject.get("objectId"), new GetCallback<ParseObject>() {
+                            @Override
+                            public void done(ParseObject parseObject, ParseException e) {
+                                if (e == null) {
+                                    parseObject.deleteInBackground(new DeleteCallback() {
+                                        @Override
+                                        public void done(ParseException e) {
+                                            getProjectHourDataFromParse();
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }
+                });
+
+
+                alertDialog.show();
+
+                return true;
+            }
+        };
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.ryanwahle.projecthours;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -28,22 +29,35 @@ public class RegisterAccountActivity extends Activity {
     }
 
     public void onClick_registerAccount_button_createAccount(View view) {
-        ParseUser registerAccountParseUser = new ParseUser();
+        if (editTextPassword.getText().toString().isEmpty() || editTextUserName.getText().toString().isEmpty()) {
+            AlertDialog.Builder errorDialog = new AlertDialog.Builder(RegisterAccountActivity.this);
+            errorDialog.setTitle("Error Creating Account");
+            errorDialog.setMessage("You must enter both a username and password!");
+            errorDialog.setNegativeButton("OK", null);
+            errorDialog.setCancelable(false);
+            errorDialog.show();
+        } else {
+            ParseUser registerAccountParseUser = new ParseUser();
+            registerAccountParseUser.setUsername(editTextUserName.getText().toString());
+            registerAccountParseUser.setPassword(editTextPassword.getText().toString());
 
-        registerAccountParseUser.setUsername(editTextUserName.getText().toString());
-        registerAccountParseUser.setPassword(editTextPassword.getText().toString());
-
-        registerAccountParseUser.signUpInBackground(new SignUpCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null) {
-                    setResult(RESULT_OK);
-                    finish();
-                } else {
-                    Log.v("onClick_registerAccount_button_createAccount", "Error creating account: " + e);
+            registerAccountParseUser.signUpInBackground(new SignUpCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e == null) {
+                        setResult(RESULT_OK);
+                        finish();
+                    } else {
+                        AlertDialog.Builder errorDialog = new AlertDialog.Builder(RegisterAccountActivity.this);
+                        errorDialog.setTitle("Error Creating Account");
+                        errorDialog.setMessage(e.toString());
+                        errorDialog.setNegativeButton("OK", null);
+                        errorDialog.setCancelable(false);
+                        errorDialog.show();
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     public void onClick_registerAccount_button_cancel(View view) {

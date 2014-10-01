@@ -1,6 +1,7 @@
 package com.ryanwahle.projecthours;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,11 +33,15 @@ public class LoginActivity extends Activity {
             public void done(ParseUser parseUser, ParseException e) {
                 if (parseUser == null) {
                     Log.v("Login Failed!", e.toString());
+                    AlertDialog.Builder errorDialog = new AlertDialog.Builder(LoginActivity.this);
+                    errorDialog.setTitle("Error Logging In");
+                    errorDialog.setMessage(e.toString());
+                    errorDialog.setNegativeButton("OK", null);
+                    errorDialog.setCancelable(false);
+                    errorDialog.show();
                 } else {
                     Log.v("Login Succeeded!", "YES!");
-                    Intent projectHoursIntent = new Intent(getApplicationContext(), ProjectHoursActivity.class);
-                    startActivity(projectHoursIntent);
-                    finish();
+                    proceedAfterLogin();
                 }
             }
         });
@@ -47,11 +52,18 @@ public class LoginActivity extends Activity {
         startActivityForResult(registerAccountIntent, 0);
     }
 
+    public void proceedAfterLogin() {
+        Intent projectHoursIntent = new Intent(getApplicationContext(), ProjectHoursActivity.class);
+        startActivity(projectHoursIntent);
+        finish();
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_CANCELED) {
             Log.v("LoginActivity", "register account reporting user canceled");
         } else if (resultCode == RESULT_OK) {
             Log.v("LoginActivity", "register account reporting user created login account");
+            proceedAfterLogin();
         }
     }
 }
