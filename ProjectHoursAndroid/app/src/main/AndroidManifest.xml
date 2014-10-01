@@ -27,6 +27,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ProjectHoursAddActivity"
+            android:label="Add Project Hours" >
+        </activity>
     </application>
 
 </manifest>
