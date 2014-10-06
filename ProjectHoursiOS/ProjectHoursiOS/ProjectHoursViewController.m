@@ -7,6 +7,8 @@
 //
 
 #import "ProjectHoursViewController.h"
+#import "LoginViewController.h"
+#import "LoginNavigationController.h"
 #import <Parse/Parse.h>
 
 @interface ProjectHoursViewController ()
@@ -15,15 +17,27 @@
 
 @implementation ProjectHoursViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+- (IBAction)logoutButton:(id)sender {
+    [PFUser logOut];
+    [self checkUserLogin];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     NSLog(@"ProjectHoursViewController loaded . . .");
+    
+    [self checkUserLogin];
+}
+     
+- (void)checkUserLogin {
+    PFUser *currentUser = [PFUser currentUser];
+    if (currentUser) {
+        NSLog(@"User %@ is logged in . . .", currentUser.username);
+    } else {
+        LoginNavigationController *loginViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LoginNavigationController"];
+        [self presentViewController:loginViewController animated:YES completion:nil];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

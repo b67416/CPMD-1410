@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "LoginViewController.h"
 #import <Parse/Parse.h>
 
 @interface AppDelegate ()
@@ -42,21 +41,6 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    
-    PFUser *currentUser = [PFUser currentUser];
-    if (currentUser) {
-        NSLog(@"User %@ is logged in . . .", currentUser.username);
-    } else {
-        NSLog(@"delegate: Nobody logged in . . .");
-        
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        LoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-        //[self.window setRootViewController:loginViewController];
-        [self.window addSubview:loginViewController.view];
-    }
-    
-    
-
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

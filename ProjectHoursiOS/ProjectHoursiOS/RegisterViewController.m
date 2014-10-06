@@ -1,36 +1,36 @@
 //
-//  LoginViewController.m
+//  RegisterViewController.m
 //  ProjectHoursiOS
 //
-//  Created by Ryan Wahle on 10/2/14.
+//  Created by Ryan Wahle on 10/6/14.
 //  Copyright (c) 2014 Ryan Wahle. All rights reserved.
 //
 
-#import "LoginViewController.h"
+#import "RegisterViewController.h"
 #import <Parse/Parse.h>
 
-@interface LoginViewController ()
+@interface RegisterViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextField *usernameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 
 @end
 
-@implementation LoginViewController
+@implementation RegisterViewController
 
-- (IBAction)signinButton {
-    NSLog(@"attempting to log in . . .");
+- (IBAction)createAccountButton:(id)sender {
+    PFUser *newUser = [PFUser user];
+    newUser.username = self.usernameTextField.text;
+    newUser.password = self.passwordTextField.text;
     
-    [PFUser logInWithUsernameInBackground:self.usernameTextField.text password:self.passwordTextField.text block:^(PFUser *user, NSError *error) {
-        if (user) {
-            NSLog(@"user %@ logged in sucessfully", self.usernameTextField.text);
-            [self dismissViewControllerAnimated:YES completion:nil];
+    [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (error) {
+            NSLog(@"Error signing up: %@", [error userInfo][@"error"]);
         } else {
-            NSLog(@"login failed: %@", error.description);
+            NSLog(@"user signed up");
+            [self.navigationController dismissViewControllerAnimated:YES completion:nil];
         }
     }];
-    
-    NSLog(@"finished . . .");
 }
 
 - (void)viewDidLoad {

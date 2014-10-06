@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		683E04A919E34E7D00FA7C98 /* LoginNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 683E04A819E34E7D00FA7C98 /* LoginNavigationController.m */; };
+		683E04AC19E3502E00FA7C98 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 683E04AB19E3502E00FA7C98 /* RegisterViewController.m */; };
+		683E04B119E353E800FA7C98 /* ProjectHoursNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 683E04B019E353E800FA7C98 /* ProjectHoursNavigationController.m */; };
 		68DCE01319DE1CF20066C64C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 68DCE01219DE1CF20066C64C /* main.m */; };
 		68DCE01619DE1CF20066C64C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 68DCE01519DE1CF20066C64C /* AppDelegate.m */; };
 		68DCE01919DE1CF20066C64C /* ProjectHoursViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68DCE01819DE1CF20066C64C /* ProjectHoursViewController.m */; };
@@ -40,6 +43,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		683E04A719E34E7D00FA7C98 /* LoginNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginNavigationController.h; sourceTree = "<group>"; };
+		683E04A819E34E7D00FA7C98 /* LoginNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginNavigationController.m; sourceTree = "<group>"; };
+		683E04AA19E3502E00FA7C98 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
+		683E04AB19E3502E00FA7C98 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
+		683E04AF19E353E800FA7C98 /* ProjectHoursNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectHoursNavigationController.h; sourceTree = "<group>"; };
+		683E04B019E353E800FA7C98 /* ProjectHoursNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectHoursNavigationController.m; sourceTree = "<group>"; };
 		68DCE00D19DE1CF20066C64C /* ProjectHoursiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjectHoursiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		68DCE01119DE1CF20066C64C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		68DCE01219DE1CF20066C64C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -99,6 +108,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		683E04AD19E3537900FA7C98 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				683E04A719E34E7D00FA7C98 /* LoginNavigationController.h */,
+				683E04A819E34E7D00FA7C98 /* LoginNavigationController.m */,
+				68DCE04F19DE26450066C64C /* LoginViewController.h */,
+				68DCE05019DE26450066C64C /* LoginViewController.m */,
+				683E04AA19E3502E00FA7C98 /* RegisterViewController.h */,
+				683E04AB19E3502E00FA7C98 /* RegisterViewController.m */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
+		683E04AE19E3539500FA7C98 /* Project Hours */ = {
+			isa = PBXGroup;
+			children = (
+				68DCE01719DE1CF20066C64C /* ProjectHoursViewController.h */,
+				68DCE01819DE1CF20066C64C /* ProjectHoursViewController.m */,
+				683E04AF19E353E800FA7C98 /* ProjectHoursNavigationController.h */,
+				683E04B019E353E800FA7C98 /* ProjectHoursNavigationController.m */,
+			);
+			name = "Project Hours";
+			sourceTree = "<group>";
+		};
 		68DCE00419DE1CF20066C64C = {
 			isa = PBXGroup;
 			children = (
@@ -121,13 +154,11 @@
 		68DCE00F19DE1CF20066C64C /* ProjectHoursiOS */ = {
 			isa = PBXGroup;
 			children = (
+				683E04AE19E3539500FA7C98 /* Project Hours */,
+				683E04AD19E3537900FA7C98 /* Login */,
 				68DCE01419DE1CF20066C64C /* AppDelegate.h */,
 				68DCE01519DE1CF20066C64C /* AppDelegate.m */,
-				68DCE01719DE1CF20066C64C /* ProjectHoursViewController.h */,
-				68DCE01819DE1CF20066C64C /* ProjectHoursViewController.m */,
 				68DCE01A19DE1CF20066C64C /* Main.storyboard */,
-				68DCE04F19DE26450066C64C /* LoginViewController.h */,
-				68DCE05019DE26450066C64C /* LoginViewController.m */,
 				68DCE01D19DE1CF20066C64C /* Images.xcassets */,
 				68DCE01F19DE1CF20066C64C /* LaunchScreen.xib */,
 				68DCE01019DE1CF20066C64C /* Supporting Files */,
@@ -282,7 +313,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				68DCE05119DE26450066C64C /* LoginViewController.m in Sources */,
+				683E04AC19E3502E00FA7C98 /* RegisterViewController.m in Sources */,
+				683E04B119E353E800FA7C98 /* ProjectHoursNavigationController.m in Sources */,
 				68DCE01919DE1CF20066C64C /* ProjectHoursViewController.m in Sources */,
+				683E04A919E34E7D00FA7C98 /* LoginNavigationController.m in Sources */,
 				68DCE01619DE1CF20066C64C /* AppDelegate.m in Sources */,
 				68DCE01319DE1CF20066C64C /* main.m in Sources */,
 			);
@@ -489,6 +523,7 @@
 				68DCE03219DE1CF30066C64C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		68DCE03319DE1CF30066C64C /* Build configuration list for PBXNativeTarget "ProjectHoursiOSTests" */ = {
 			isa = XCConfigurationList;
@@ -497,6 +532,7 @@
 				68DCE03519DE1CF30066C64C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
