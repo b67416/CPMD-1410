@@ -10,9 +10,11 @@
 		683E04A919E34E7D00FA7C98 /* LoginNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 683E04A819E34E7D00FA7C98 /* LoginNavigationController.m */; };
 		683E04AC19E3502E00FA7C98 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 683E04AB19E3502E00FA7C98 /* RegisterViewController.m */; };
 		683E04B119E353E800FA7C98 /* ProjectHoursNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 683E04B019E353E800FA7C98 /* ProjectHoursNavigationController.m */; };
+		683E04B419E4CDC500FA7C98 /* ProjectHoursTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 683E04B319E4CDC500FA7C98 /* ProjectHoursTableViewController.m */; };
+		683E04B719E4DD1900FA7C98 /* ProjectHoursTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 683E04B619E4DD1900FA7C98 /* ProjectHoursTableViewCell.m */; };
+		683E04BA19E4F74000FA7C98 /* AddProjectHoursViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 683E04B919E4F74000FA7C98 /* AddProjectHoursViewController.m */; };
 		68DCE01319DE1CF20066C64C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 68DCE01219DE1CF20066C64C /* main.m */; };
 		68DCE01619DE1CF20066C64C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 68DCE01519DE1CF20066C64C /* AppDelegate.m */; };
-		68DCE01919DE1CF20066C64C /* ProjectHoursViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68DCE01819DE1CF20066C64C /* ProjectHoursViewController.m */; };
 		68DCE01C19DE1CF20066C64C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 68DCE01A19DE1CF20066C64C /* Main.storyboard */; };
 		68DCE01E19DE1CF20066C64C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 68DCE01D19DE1CF20066C64C /* Images.xcassets */; };
 		68DCE02119DE1CF20066C64C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 68DCE01F19DE1CF20066C64C /* LaunchScreen.xib */; };
@@ -49,13 +51,17 @@
 		683E04AB19E3502E00FA7C98 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		683E04AF19E353E800FA7C98 /* ProjectHoursNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectHoursNavigationController.h; sourceTree = "<group>"; };
 		683E04B019E353E800FA7C98 /* ProjectHoursNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectHoursNavigationController.m; sourceTree = "<group>"; };
+		683E04B219E4CDC500FA7C98 /* ProjectHoursTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectHoursTableViewController.h; sourceTree = "<group>"; };
+		683E04B319E4CDC500FA7C98 /* ProjectHoursTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectHoursTableViewController.m; sourceTree = "<group>"; };
+		683E04B519E4DD1900FA7C98 /* ProjectHoursTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectHoursTableViewCell.h; sourceTree = "<group>"; };
+		683E04B619E4DD1900FA7C98 /* ProjectHoursTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectHoursTableViewCell.m; sourceTree = "<group>"; };
+		683E04B819E4F74000FA7C98 /* AddProjectHoursViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddProjectHoursViewController.h; sourceTree = "<group>"; };
+		683E04B919E4F74000FA7C98 /* AddProjectHoursViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddProjectHoursViewController.m; sourceTree = "<group>"; };
 		68DCE00D19DE1CF20066C64C /* ProjectHoursiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjectHoursiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		68DCE01119DE1CF20066C64C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		68DCE01219DE1CF20066C64C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		68DCE01419DE1CF20066C64C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		68DCE01519DE1CF20066C64C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		68DCE01719DE1CF20066C64C /* ProjectHoursViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProjectHoursViewController.h; sourceTree = "<group>"; };
-		68DCE01819DE1CF20066C64C /* ProjectHoursViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProjectHoursViewController.m; sourceTree = "<group>"; };
 		68DCE01B19DE1CF20066C64C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		68DCE01D19DE1CF20066C64C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		68DCE02019DE1CF20066C64C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -124,10 +130,14 @@
 		683E04AE19E3539500FA7C98 /* Project Hours */ = {
 			isa = PBXGroup;
 			children = (
-				68DCE01719DE1CF20066C64C /* ProjectHoursViewController.h */,
-				68DCE01819DE1CF20066C64C /* ProjectHoursViewController.m */,
 				683E04AF19E353E800FA7C98 /* ProjectHoursNavigationController.h */,
 				683E04B019E353E800FA7C98 /* ProjectHoursNavigationController.m */,
+				683E04B219E4CDC500FA7C98 /* ProjectHoursTableViewController.h */,
+				683E04B319E4CDC500FA7C98 /* ProjectHoursTableViewController.m */,
+				683E04B519E4DD1900FA7C98 /* ProjectHoursTableViewCell.h */,
+				683E04B619E4DD1900FA7C98 /* ProjectHoursTableViewCell.m */,
+				683E04B819E4F74000FA7C98 /* AddProjectHoursViewController.h */,
+				683E04B919E4F74000FA7C98 /* AddProjectHoursViewController.m */,
 			);
 			name = "Project Hours";
 			sourceTree = "<group>";
@@ -156,9 +166,9 @@
 			children = (
 				683E04AE19E3539500FA7C98 /* Project Hours */,
 				683E04AD19E3537900FA7C98 /* Login */,
+				68DCE01A19DE1CF20066C64C /* Main.storyboard */,
 				68DCE01419DE1CF20066C64C /* AppDelegate.h */,
 				68DCE01519DE1CF20066C64C /* AppDelegate.m */,
-				68DCE01A19DE1CF20066C64C /* Main.storyboard */,
 				68DCE01D19DE1CF20066C64C /* Images.xcassets */,
 				68DCE01F19DE1CF20066C64C /* LaunchScreen.xib */,
 				68DCE01019DE1CF20066C64C /* Supporting Files */,
@@ -313,10 +323,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				68DCE05119DE26450066C64C /* LoginViewController.m in Sources */,
+				683E04B719E4DD1900FA7C98 /* ProjectHoursTableViewCell.m in Sources */,
+				683E04B419E4CDC500FA7C98 /* ProjectHoursTableViewController.m in Sources */,
 				683E04AC19E3502E00FA7C98 /* RegisterViewController.m in Sources */,
 				683E04B119E353E800FA7C98 /* ProjectHoursNavigationController.m in Sources */,
-				68DCE01919DE1CF20066C64C /* ProjectHoursViewController.m in Sources */,
 				683E04A919E34E7D00FA7C98 /* LoginNavigationController.m in Sources */,
+				683E04BA19E4F74000FA7C98 /* AddProjectHoursViewController.m in Sources */,
 				68DCE01619DE1CF20066C64C /* AppDelegate.m in Sources */,
 				68DCE01319DE1CF20066C64C /* main.m in Sources */,
 			);
