@@ -85,4 +85,14 @@ NSArray *projectHoursArray = nil;
     return cell;
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    [projectHoursArray[indexPath.row] deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        [self getProjectHoursDataFromParse];
+    }];
+}
+
 @end
