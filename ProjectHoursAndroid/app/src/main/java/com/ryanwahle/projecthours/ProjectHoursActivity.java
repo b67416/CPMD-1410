@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,6 +33,8 @@ public class ProjectHoursActivity extends Activity {
     ListView projectHoursListView = null;
     ArrayList<HashMap<String, String>> projectHoursArrayList = null;
 
+    private Handler automaticDataRefreshHandler = new Handler();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +44,8 @@ public class ProjectHoursActivity extends Activity {
         setContentView(R.layout.activity_project_hours);
 
         projectHoursListView = (ListView) findViewById(R.id.projectHours_listView);
+
+        automaticDataRefreshHandler.postDelayed(automaticDataRefreshRunner, 20000);
     }
 
     @Override
@@ -48,6 +53,17 @@ public class ProjectHoursActivity extends Activity {
         super.onStart();
         checkIfUserLoggedIn();
     }
+
+    private Runnable automaticDataRefreshRunner = new Runnable() {
+        @Override
+        public void run() {
+            getProjectHourDataFromParse();
+
+            automaticDataRefreshHandler.postDelayed(this, 20000);
+
+            Log.v("Runnable", "Refreshed Data");
+        }
+    };
 
     public void checkIfUserLoggedIn() {
         ParseUser currentUser = ParseUser.getCurrentUser();
@@ -95,6 +111,7 @@ public class ProjectHoursActivity extends Activity {
                     SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), projectHoursArrayList, R.layout.layout_project_hours_listview_row, mapFrom, mapTo);
                     projectHoursListView.setAdapter(adapter);
 
+                    projectHoursListView.setOnItemClickListener(updateListItem());
                     projectHoursListView.setOnItemLongClickListener(deleteListItem());
 
                 } else {
@@ -102,6 +119,24 @@ public class ProjectHoursActivity extends Activity {
                 }
             }
         });
+    }
+
+    protected AdapterView.OnItemClickListener updateListItem() {
+        return new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                HashMap<String, String> projectHoursParseObjectToUpdate = projectHoursArrayList.get(position);
+
+                Intent projectHoursUpdateIntent = new Intent(getApplicationContext(), ProjectHoursAddActivity.class);
+
+                projectHoursUpdateIntent.putExtra("objectId", projectHoursParseObjectToUpdate.get("objectId"));
+                //projectHoursUpdateIntent.putExtra("projectName", projectHoursParseObjectToUpdate.get("projectName"));
+                //projectHoursUpdateIntent.putExtra("hoursWorked", projectHoursParseObjectToUpdate.get("hoursWorked"));
+                //projectHoursUpdateIntent.putExtra("projectComplete", projectHoursParseObjectToUpdate.get("projectComplete"));
+
+                startActivityForResult(projectHoursUpdateIntent, 0);
+            }
+        };
     }
 
     protected AdapterView.OnItemLongClickListener deleteListItem() {
@@ -162,6 +197,8 @@ public class ProjectHoursActivity extends Activity {
         } else if (id == R.id.projectHours_menu_addProjectHours) {
             Intent projectHoursAddIntent = new Intent(this, ProjectHoursAddActivity.class);
             startActivityForResult(projectHoursAddIntent, 0);
+        } else if (id == R.id.projectHours_menu_refreshData) {
+            getProjectHourDataFromParse();
         }
 
         return super.onOptionsItemSelected(item);

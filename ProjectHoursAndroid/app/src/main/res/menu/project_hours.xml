@@ -6,6 +6,11 @@
         android:orderInCategory="100"
         android:showAsAction="never" />
 
+    <item android:id="@+id/projectHours_menu_refreshData"
+        android:icon="@drawable/ic_action_refresh"
+        android:title="Refresh Data"
+        android:showAsAction="ifRoom" />
+
     <item android:id="@+id/projectHours_menu_addProjectHours"
         android:icon="@drawable/ic_action_new"
         android:title="Add Project Hours"
