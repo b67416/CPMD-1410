@@ -1,6 +1,6 @@
 CPMD-1410
 =========
-Week 1
+Week 3
 by Ryan Wahle
 
 GitHub Link
