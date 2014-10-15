@@ -60,8 +60,6 @@ public class ProjectHoursActivity extends Activity {
             getProjectHourDataFromParse();
 
             automaticDataRefreshHandler.postDelayed(this, 20000);
-
-            Log.v("Runnable", "Refreshed Data");
         }
     };
 
@@ -79,62 +77,65 @@ public class ProjectHoursActivity extends Activity {
     }
 
     public void getProjectHourDataFromParse() {
-        projectHoursArrayList = new ArrayList<HashMap<String, String>>();
+        if (InternetStatus.isInternetAvailable(ProjectHoursActivity.this)) {
+            projectHoursArrayList = new ArrayList<HashMap<String, String>>();
 
-        ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("ProjectHours");
-        parseQuery.findInBackground(new FindCallback<ParseObject>() {
-            public void done(List<ParseObject> projectHoursList, ParseException e) {
-                if (e == null) {
-                    for (ParseObject projectHoursParseObject : projectHoursList) {
-                        String entryObjectID = projectHoursParseObject.getObjectId();
-                        String entryProjectName = projectHoursParseObject.getString("projectName");
-                        Integer entryHoursWorked = projectHoursParseObject.getInt("hoursWorked");
-                        Boolean entryProjectComplete = projectHoursParseObject.getBoolean("projectComplete");
+            ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("ProjectHours");
+            parseQuery.findInBackground(new FindCallback<ParseObject>() {
+                public void done(List<ParseObject> projectHoursList, ParseException e) {
+                    if (e == null) {
+                        for (ParseObject projectHoursParseObject : projectHoursList) {
+                            String entryObjectID = projectHoursParseObject.getObjectId();
+                            String entryProjectName = projectHoursParseObject.getString("projectName");
+                            Integer entryHoursWorked = projectHoursParseObject.getInt("hoursWorked");
+                            Boolean entryProjectComplete = projectHoursParseObject.getBoolean("projectComplete");
 
-                        HashMap<String, String> projectHoursHashMap = new HashMap<String, String>();
-                        projectHoursHashMap.put("objectId", entryObjectID);
-                        projectHoursHashMap.put("projectName", entryProjectName);
-                        projectHoursHashMap.put("hoursWorked", entryHoursWorked.toString() + " hours worked");
+                            HashMap<String, String> projectHoursHashMap = new HashMap<String, String>();
+                            projectHoursHashMap.put("objectId", entryObjectID);
+                            projectHoursHashMap.put("projectName", entryProjectName);
+                            projectHoursHashMap.put("hoursWorked", entryHoursWorked.toString() + " hours worked");
 
-                        if (entryProjectComplete) {
-                            projectHoursHashMap.put("projectComplete", "Completed");
-                        } else {
-                            projectHoursHashMap.put("projectComplete", "Not Completed");
+                            if (entryProjectComplete) {
+                                projectHoursHashMap.put("projectComplete", "Completed");
+                            } else {
+                                projectHoursHashMap.put("projectComplete", "Not Completed");
+                            }
+
+                            projectHoursArrayList.add(projectHoursHashMap);
                         }
 
-                        projectHoursArrayList.add(projectHoursHashMap);
+                        String[] mapFrom = {"projectName", "hoursWorked", "projectComplete"};
+                        int[] mapTo = {R.id.projectHoursListViewRow_textView_projectName, R.id.projectHoursListViewRow_textView_hoursWorked, R.id.projectHoursListViewRow_textView_projectCompleted};
+
+                        SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), projectHoursArrayList, R.layout.layout_project_hours_listview_row, mapFrom, mapTo);
+                        projectHoursListView.setAdapter(adapter);
+
+                        projectHoursListView.setOnItemClickListener(updateListItem());
+                        projectHoursListView.setOnItemLongClickListener(deleteListItem());
+
+                    } else {
+                        Log.d("getProjectHourDataFromParse()", "Error: " + e.getMessage());
                     }
-
-                    String[] mapFrom = { "projectName", "hoursWorked", "projectComplete" };
-                    int[] mapTo = { R.id.projectHoursListViewRow_textView_projectName, R.id.projectHoursListViewRow_textView_hoursWorked, R.id.projectHoursListViewRow_textView_projectCompleted };
-
-                    SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(), projectHoursArrayList, R.layout.layout_project_hours_listview_row, mapFrom, mapTo);
-                    projectHoursListView.setAdapter(adapter);
-
-                    projectHoursListView.setOnItemClickListener(updateListItem());
-                    projectHoursListView.setOnItemLongClickListener(deleteListItem());
-
-                } else {
-                    Log.d("getProjectHourDataFromParse()", "Error: " + e.getMessage());
                 }
-            }
-        });
+            });
+        }
     }
 
     protected AdapterView.OnItemClickListener updateListItem() {
         return new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                HashMap<String, String> projectHoursParseObjectToUpdate = projectHoursArrayList.get(position);
+                if (InternetStatus.isInternetAvailable(ProjectHoursActivity.this)) {
+                    HashMap<String, String> projectHoursParseObjectToUpdate = projectHoursArrayList.get(position);
 
-                Intent projectHoursUpdateIntent = new Intent(getApplicationContext(), ProjectHoursAddActivity.class);
+                    Intent projectHoursUpdateIntent = new Intent(getApplicationContext(), ProjectHoursAddActivity.class);
 
-                projectHoursUpdateIntent.putExtra("objectId", projectHoursParseObjectToUpdate.get("objectId"));
-                //projectHoursUpdateIntent.putExtra("projectName", projectHoursParseObjectToUpdate.get("projectName"));
-                //projectHoursUpdateIntent.putExtra("hoursWorked", projectHoursParseObjectToUpdate.get("hoursWorked"));
-                //projectHoursUpdateIntent.putExtra("projectComplete", projectHoursParseObjectToUpdate.get("projectComplete"));
+                    projectHoursUpdateIntent.putExtra("objectId", projectHoursParseObjectToUpdate.get("objectId"));
 
-                startActivityForResult(projectHoursUpdateIntent, 0);
+                    startActivityForResult(projectHoursUpdateIntent, 0);
+                } else {
+                    InternetStatus.showNoInternetAlert(ProjectHoursActivity.this);
+                }
             }
         };
     }
@@ -143,38 +144,42 @@ public class ProjectHoursActivity extends Activity {
         return new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                final HashMap<String, String> projectHoursParseObject = projectHoursArrayList.get(position);
+                if (InternetStatus.isInternetAvailable(ProjectHoursActivity.this)) {
+                    final HashMap<String, String> projectHoursParseObject = projectHoursArrayList.get(position);
 
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(ProjectHoursActivity.this);
-                alertDialog.setTitle("Delete Project Hours");
-                alertDialog.setMessage("Are you sure you want to delete this project hour entry?");
-                alertDialog.setNegativeButton("No", null);
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(ProjectHoursActivity.this);
+                    alertDialog.setTitle("Delete Project Hours");
+                    alertDialog.setMessage("Are you sure you want to delete this project hour entry?");
+                    alertDialog.setNegativeButton("No", null);
 
-                alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
 
-                        //projectHoursArrayList.remove(position);
+                            //projectHoursArrayList.remove(position);
 
-                        ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("ProjectHours");
-                        parseQuery.getInBackground(projectHoursParseObject.get("objectId"), new GetCallback<ParseObject>() {
-                            @Override
-                            public void done(ParseObject parseObject, ParseException e) {
-                                if (e == null) {
-                                    parseObject.deleteInBackground(new DeleteCallback() {
-                                        @Override
-                                        public void done(ParseException e) {
-                                            getProjectHourDataFromParse();
-                                        }
-                                    });
+                            ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("ProjectHours");
+                            parseQuery.getInBackground(projectHoursParseObject.get("objectId"), new GetCallback<ParseObject>() {
+                                @Override
+                                public void done(ParseObject parseObject, ParseException e) {
+                                    if (e == null) {
+                                        parseObject.deleteInBackground(new DeleteCallback() {
+                                            @Override
+                                            public void done(ParseException e) {
+                                                getProjectHourDataFromParse();
+                                            }
+                                        });
+                                    }
                                 }
-                            }
-                        });
-                    }
-                });
+                            });
+                        }
+                    });
 
 
-                alertDialog.show();
+                    alertDialog.show();
+                } else {
+                    InternetStatus.showNoInternetAlert(ProjectHoursActivity.this);
+                }
 
                 return true;
             }
@@ -195,10 +200,18 @@ public class ProjectHoursActivity extends Activity {
             checkIfUserLoggedIn();
             return true;
         } else if (id == R.id.projectHours_menu_addProjectHours) {
-            Intent projectHoursAddIntent = new Intent(this, ProjectHoursAddActivity.class);
-            startActivityForResult(projectHoursAddIntent, 0);
+            if (InternetStatus.isInternetAvailable(ProjectHoursActivity.this)) {
+                Intent projectHoursAddIntent = new Intent(this, ProjectHoursAddActivity.class);
+                startActivityForResult(projectHoursAddIntent, 0);
+            } else {
+                InternetStatus.showNoInternetAlert(ProjectHoursActivity.this);
+            }
         } else if (id == R.id.projectHours_menu_refreshData) {
-            getProjectHourDataFromParse();
+            if (InternetStatus.isInternetAvailable(ProjectHoursActivity.this)) {
+                getProjectHourDataFromParse();
+            } else {
+                InternetStatus.showNoInternetAlert(ProjectHoursActivity.this);
+            }
         }
 
         return super.onOptionsItemSelected(item);

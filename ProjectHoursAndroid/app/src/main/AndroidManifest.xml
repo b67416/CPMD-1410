@@ -12,15 +12,18 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".LoginActivity"
-            android:label="Login" >
+            android:label="Login"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".RegisterAccountActivity"
-            android:label="Register Account" >
+            android:label="Register Account"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ProjectHoursActivity"
-            android:label="Project Hours" >
+            android:label="Project Hours"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,7 +32,8 @@
         </activity>
         <activity
             android:name=".ProjectHoursAddActivity"
-            android:label="Add Project Hours" >
+            android:label="Add Project Hours"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

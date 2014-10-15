@@ -28,23 +28,38 @@ public class LoginActivity extends Activity {
     public void onClick_login_button_signIn(View view) {
         Log.v("login_button_signIn", "clicked");
 
-        ParseUser.logInInBackground(editTextUserName.getText().toString(), editTextPassword.getText().toString(), new LogInCallback() {
-            @Override
-            public void done(ParseUser parseUser, ParseException e) {
-                if (parseUser == null) {
-                    Log.v("Login Failed!", e.toString());
-                    AlertDialog.Builder errorDialog = new AlertDialog.Builder(LoginActivity.this);
-                    errorDialog.setTitle("Error Logging In");
-                    errorDialog.setMessage(e.toString());
-                    errorDialog.setNegativeButton("OK", null);
-                    errorDialog.setCancelable(false);
-                    errorDialog.show();
-                } else {
-                    Log.v("Login Succeeded!", "YES!");
-                    proceedAfterLogin();
+        if ((editTextUserName.getText().toString().isEmpty() || editTextUserName.getText().toString().trim().equals("") || editTextPassword.getText().toString().isEmpty() || editTextPassword.getText().toString().trim().equals(""))) {
+            AlertDialog.Builder errorDialog = new AlertDialog.Builder(LoginActivity.this);
+            errorDialog.setTitle("Error Logging In");
+            errorDialog.setMessage("You must enter a username and password!");
+            errorDialog.setNegativeButton("OK", null);
+            errorDialog.setCancelable(false);
+            errorDialog.show();
+
+            return;
+        }
+
+        if (InternetStatus.isInternetAvailable(this)) {
+            ParseUser.logInInBackground(editTextUserName.getText().toString(), editTextPassword.getText().toString(), new LogInCallback() {
+                @Override
+                public void done(ParseUser parseUser, ParseException e) {
+                    if (parseUser == null) {
+                        Log.v("Login Failed!", e.toString());
+                        AlertDialog.Builder errorDialog = new AlertDialog.Builder(LoginActivity.this);
+                        errorDialog.setTitle("Error Logging In");
+                        errorDialog.setMessage("Invalid username and/or password!");
+                        errorDialog.setNegativeButton("OK", null);
+                        errorDialog.setCancelable(false);
+                        errorDialog.show();
+                    } else {
+                        Log.v("Login Succeeded!", "YES!");
+                        proceedAfterLogin();
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            InternetStatus.showNoInternetAlert(LoginActivity.this);
+        }
     }
 
     public void onClick_login_button_register(View view) {
