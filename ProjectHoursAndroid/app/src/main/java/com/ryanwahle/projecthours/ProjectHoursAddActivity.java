@@ -79,43 +79,47 @@ public class ProjectHoursAddActivity extends Activity {
             errorDialog.setCancelable(false);
             errorDialog.show();
         } else {
-            if (updateParseObjectId == null) {
-                ParseObject projectHoursParseObject = new ParseObject("ProjectHours");
+            if (InternetStatus.isInternetAvailable(ProjectHoursAddActivity.this)) {
+                if (updateParseObjectId == null) {
+                    ParseObject projectHoursParseObject = new ParseObject("ProjectHours");
 
-                projectHoursParseObject.put("projectName", editTextProjectName.getText().toString());
-                projectHoursParseObject.put("hoursWorked", numberPickerHoursWorked.getValue());
-                projectHoursParseObject.put("projectComplete", checkBoxProjectComplete.isChecked());
-                projectHoursParseObject.setACL(new ParseACL(ParseUser.getCurrentUser()));
+                    projectHoursParseObject.put("projectName", editTextProjectName.getText().toString());
+                    projectHoursParseObject.put("hoursWorked", numberPickerHoursWorked.getValue());
+                    projectHoursParseObject.put("projectComplete", checkBoxProjectComplete.isChecked());
+                    projectHoursParseObject.setACL(new ParseACL(ParseUser.getCurrentUser()));
 
-                projectHoursParseObject.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        finish();
-                    }
-                });
-            } else {
-                Log.v("saving object", "now");
-
-                ParseQuery<ParseObject> updateParseObject = ParseQuery.getQuery("ProjectHours");
-
-                updateParseObject.getInBackground(updateParseObjectId, new GetCallback<ParseObject>() {
-                    @Override
-                    public void done(ParseObject parseObject, ParseException e) {
-                        if (e == null) {
-                            parseObject.put("projectName", editTextProjectName.getText().toString());
-                            parseObject.put("hoursWorked", numberPickerHoursWorked.getValue());
-                            parseObject.put("projectComplete", checkBoxProjectComplete.isChecked());
-
-                            parseObject.saveInBackground(new SaveCallback() {
-                                @Override
-                                public void done(ParseException e) {
-                                    finish();
-                                }
-                            });
+                    projectHoursParseObject.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            finish();
                         }
-                    }
-                });
+                    });
+                } else {
+                    Log.v("saving object", "now");
 
+                    ParseQuery<ParseObject> updateParseObject = ParseQuery.getQuery("ProjectHours");
+
+                    updateParseObject.getInBackground(updateParseObjectId, new GetCallback<ParseObject>() {
+                        @Override
+                        public void done(ParseObject parseObject, ParseException e) {
+                            if (e == null) {
+                                parseObject.put("projectName", editTextProjectName.getText().toString());
+                                parseObject.put("hoursWorked", numberPickerHoursWorked.getValue());
+                                parseObject.put("projectComplete", checkBoxProjectComplete.isChecked());
+
+                                parseObject.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        finish();
+                                    }
+                                });
+                            }
+                        }
+                    });
+
+                }
+            } else {
+                InternetStatus.showNoInternetAlert(ProjectHoursAddActivity.this);
             }
         }
     }
