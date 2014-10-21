@@ -20,6 +20,7 @@
 @implementation ProjectHoursTableViewController
 
 NSArray *projectHoursArray = nil;
+NSTimer *dataRefreshTimer = nil;
 
 - (BOOL)isInternetAvailable {
     Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
@@ -44,6 +45,14 @@ NSArray *projectHoursArray = nil;
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self checkUserLogin];
+    
+    dataRefreshTimer = [NSTimer scheduledTimerWithTimeInterval:20.0 target:self selector:@selector(getProjectHoursDataFromParse) userInfo:nil repeats:YES];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
+    [dataRefreshTimer invalidate];
 }
 
 - (void)checkUserLogin {
@@ -57,6 +66,7 @@ NSArray *projectHoursArray = nil;
 }
 
 - (void)getProjectHoursDataFromParse {
+    NSLog(@"checking for data . . .");
     if ([self isInternetAvailable]) {
         PFQuery *projectHoursQuery = [PFQuery queryWithClassName:@"ProjectHours"];
         [projectHoursQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
