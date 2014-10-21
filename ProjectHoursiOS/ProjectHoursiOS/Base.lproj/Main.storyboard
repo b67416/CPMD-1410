@@ -48,7 +48,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="ATN-Uz-3pj" kind="show" id="Lb8-SL-p3T"/>
+                                    <segue destination="ATN-Uz-3pj" kind="show" identifier="RegisterAccountSegue" id="Lb8-SL-p3T"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kW6-U8-n5W">
@@ -222,7 +222,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="iDx-bx-iae">
                             <connections>
-                                <segue destination="MPh-gn-f8P" kind="show" id="9oL-6m-Z92"/>
+                                <segue destination="MPh-gn-f8P" kind="show" identifier="ProjectHoursDetailSegue" id="9oL-6m-Z92"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

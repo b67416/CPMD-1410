@@ -7,6 +7,7 @@
 //
 
 #import "AddProjectHoursViewController.h"
+#import "Reachability.h"
 #import <Parse/Parse.h>
 
 @interface AddProjectHoursViewController ()
@@ -27,6 +28,23 @@ NSInteger selectedProjectHours = 1;
     if (self.editProjectHoursPFObject != nil) {
         self.navigationItem.title = @"Edit Project Hours";
     }
+    
+}
+
+- (BOOL)isInternetAvailable {
+    Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
+    
+    if (networkStatus == NotReachable) {
+        return false;
+    }
+    
+    // if ([self isInternetAvailable] == NO) {
+    //  [[[UIAlertView alloc] initWithTitle:@"Internet Connection Error" message:@"Please connect to the internet and try again!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    //  return;
+    // }
+
+    return true;
 }
 
 - (void)viewDidLoad {
@@ -43,6 +61,11 @@ NSInteger selectedProjectHours = 1;
 
 - (IBAction)saveButton:(id)sender {
     PFObject *projectHoursPFObject = nil;
+    
+    if ([self isInternetAvailable] == NO) {
+        [[[UIAlertView alloc] initWithTitle:@"Internet Connection Error" message:@"Please connect to the internet and try again!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        return;
+    }
     
     if (self.projectNameTextField.text.length == 0) {
         [[[UIAlertView alloc] initWithTitle:@"Error" message:@"You must enter a project name!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];

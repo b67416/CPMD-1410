@@ -32,6 +32,7 @@
 		68DCE04D19DE1F210066C64C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68DCE04519DE1F210066C64C /* StoreKit.framework */; };
 		68DCE04E19DE1F210066C64C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68DCE04619DE1F210066C64C /* SystemConfiguration.framework */; };
 		68DCE05119DE26450066C64C /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68DCE05019DE26450066C64C /* LoginViewController.m */; };
+		68E8650B19F6F86800A81D90 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 68E8650A19F6F86800A81D90 /* Reachability.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +83,8 @@
 		68DCE04619DE1F210066C64C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		68DCE04F19DE26450066C64C /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		68DCE05019DE26450066C64C /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		68E8650919F6F86800A81D90 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		68E8650A19F6F86800A81D90 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +167,7 @@
 		68DCE00F19DE1CF20066C64C /* ProjectHoursiOS */ = {
 			isa = PBXGroup;
 			children = (
+				68E8650819F6F85200A81D90 /* Reachability */,
 				683E04AE19E3539500FA7C98 /* Project Hours */,
 				683E04AD19E3537900FA7C98 /* Login */,
 				68DCE01A19DE1CF20066C64C /* Main.storyboard */,
@@ -219,6 +223,15 @@
 				68DCE03719DE1DF20066C64C /* Parse.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		68E8650819F6F85200A81D90 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				68E8650919F6F86800A81D90 /* Reachability.h */,
+				68E8650A19F6F86800A81D90 /* Reachability.m */,
+			);
+			name = Reachability;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -326,6 +339,7 @@
 				683E04B719E4DD1900FA7C98 /* ProjectHoursTableViewCell.m in Sources */,
 				683E04B419E4CDC500FA7C98 /* ProjectHoursTableViewController.m in Sources */,
 				683E04AC19E3502E00FA7C98 /* RegisterViewController.m in Sources */,
+				68E8650B19F6F86800A81D90 /* Reachability.m in Sources */,
 				683E04B119E353E800FA7C98 /* ProjectHoursNavigationController.m in Sources */,
 				683E04A919E34E7D00FA7C98 /* LoginNavigationController.m in Sources */,
 				683E04BA19E4F74000FA7C98 /* AddProjectHoursViewController.m in Sources */,

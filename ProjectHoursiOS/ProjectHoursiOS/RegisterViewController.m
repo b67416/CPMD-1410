@@ -7,6 +7,7 @@
 //
 
 #import "RegisterViewController.h"
+#import "Reachability.h"
 #import <Parse/Parse.h>
 
 @interface RegisterViewController ()
@@ -18,7 +19,28 @@
 
 @implementation RegisterViewController
 
+- (BOOL)isInternetAvailable {
+    Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
+    
+    if (networkStatus == NotReachable) {
+        return false;
+    }
+    
+    // if ([self isInternetAvailable] == NO) {
+    //  [[[UIAlertView alloc] initWithTitle:@"Internet Connection Error" message:@"Please connect to the internet and try again!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    //  return;
+    // }
+    
+    return true;
+}
+
 - (IBAction)createAccountButton:(id)sender {
+    if ([self isInternetAvailable] == NO) {
+        [[[UIAlertView alloc] initWithTitle:@"Internet Connection Error" message:@"Please connect to the internet and try again!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        return;
+    }
+    
     PFUser *newUser = [PFUser user];
     newUser.username = self.usernameTextField.text;
     newUser.password = self.passwordTextField.text;
@@ -28,7 +50,7 @@
     } else {
     [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (error) {
-            [[[UIAlertView alloc] initWithTitle:@"Registration Error" message:[error userInfo][@"error"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            [[[UIAlertView alloc] initWithTitle:@"Registration Error" message:@"Username already exists! Please try again with a different username!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         } else {
             [self.navigationController dismissViewControllerAnimated:YES completion:nil];
         }

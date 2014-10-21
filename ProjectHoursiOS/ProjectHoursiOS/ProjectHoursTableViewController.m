@@ -10,6 +10,7 @@
 #import "ProjectHoursTableViewCell.h"
 #import "LoginNavigationController.h"
 #import "AddProjectHoursViewController.h"
+#import "Reachability.h"
 #import <Parse/Parse.h>
 
 @interface ProjectHoursTableViewController ()
@@ -19,6 +20,17 @@
 @implementation ProjectHoursTableViewController
 
 NSArray *projectHoursArray = nil;
+
+- (BOOL)isInternetAvailable {
+    Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
+    
+    if (networkStatus == NotReachable) {
+        return false;
+    }
+    
+    return true;
+}
 
 - (IBAction)logoutButton:(id)sender {
     [PFUser logOut];
@@ -45,15 +57,17 @@ NSArray *projectHoursArray = nil;
 }
 
 - (void)getProjectHoursDataFromParse {
-    PFQuery *projectHoursQuery = [PFQuery queryWithClassName:@"ProjectHours"];
-    [projectHoursQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (error) {
-            [[[UIAlertView alloc] initWithTitle:@"Database Error" message:error.description delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-        } else {
-            projectHoursArray = [NSArray arrayWithArray:objects];
-            [self.tableView reloadData];
-        }
-    }];
+    if ([self isInternetAvailable]) {
+        PFQuery *projectHoursQuery = [PFQuery queryWithClassName:@"ProjectHours"];
+        [projectHoursQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if (error) {
+                [[[UIAlertView alloc] initWithTitle:@"Database Error" message:error.description delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            } else {
+                projectHoursArray = [NSArray arrayWithArray:objects];
+                [self.tableView reloadData];
+            }
+        }];
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -89,8 +103,12 @@ NSArray *projectHoursArray = nil;
     
     editProjectHoursViewController.editProjectHoursPFObject = projectHoursArray[indexPath.row];
     
-    [self.navigationController pushViewController:editProjectHoursViewController animated:YES];
-
+    if ([self isInternetAvailable]) {
+        [self.navigationController pushViewController:editProjectHoursViewController animated:YES];
+    } else {
+        [[[UIAlertView alloc] initWithTitle:@"Internet Connection Error" message:@"Please connect to the internet and try again!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -102,5 +120,17 @@ NSArray *projectHoursArray = nil;
         [self getProjectHoursDataFromParse];
     }];
 }
+
+-(BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+    if ([identifier isEqualToString:@"ProjectHoursDetailSegue"]) {
+        if ([self isInternetAvailable] == NO) {
+            [[[UIAlertView alloc] initWithTitle:@"Internet Connection Error" message:@"Please connect to the internet and try again!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            return false;
+        }
+    }
+    
+    return true;
+}
+
 
 @end
