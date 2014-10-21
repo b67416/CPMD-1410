@@ -9,6 +9,7 @@
 #import "ProjectHoursTableViewController.h"
 #import "ProjectHoursTableViewCell.h"
 #import "LoginNavigationController.h"
+#import "AddProjectHoursViewController.h"
 #import <Parse/Parse.h>
 
 @interface ProjectHoursTableViewController ()
@@ -67,8 +68,6 @@ NSArray *projectHoursArray = nil;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ProjectHoursTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ProjectHoursCell" forIndexPath:indexPath];
     
-    // Configure the cell...
-    
     NSString *projectNameString = projectHoursArray[indexPath.row][@"projectName"];
     NSInteger hoursWorkedInteger = [projectHoursArray[indexPath.row][@"hoursWorked"] integerValue];
     BOOL projectCompleteBoolean = [projectHoursArray[indexPath.row][@"projectComplete"] boolValue];
@@ -83,6 +82,15 @@ NSArray *projectHoursArray = nil;
     }
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    AddProjectHoursViewController *editProjectHoursViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AddProjectHoursViewController"];
+    
+    editProjectHoursViewController.editProjectHoursPFObject = projectHoursArray[indexPath.row];
+    
+    [self.navigationController pushViewController:editProjectHoursViewController animated:YES];
+
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {

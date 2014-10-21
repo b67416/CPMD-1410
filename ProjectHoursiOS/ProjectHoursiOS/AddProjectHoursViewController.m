@@ -21,17 +21,44 @@
 
 NSInteger selectedProjectHours = 1;
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if (self.editProjectHoursPFObject != nil) {
+        self.navigationItem.title = @"Edit Project Hours";
+    }
+}
+
+- (void)viewDidLoad {
+    if (self.editProjectHoursPFObject != nil) {
+        NSString *projectName = self.editProjectHoursPFObject[@"projectName"];
+        NSInteger hoursWorked = [self.editProjectHoursPFObject[@"hoursWorked"] integerValue];
+        BOOL projectComplete = [self.editProjectHoursPFObject[@"projectComplete"] boolValue];
+        
+        self.projectNameTextField.text = projectName;
+        [self.projectHoursPicker selectRow:(hoursWorked - 1) inComponent:0 animated:YES];
+        [self.projectCompleteSwitch setOn:projectComplete animated:YES];
+    }
+}
+
 - (IBAction)saveButton:(id)sender {
+    PFObject *projectHoursPFObject = nil;
+    
     if (self.projectNameTextField.text.length == 0) {
         [[[UIAlertView alloc] initWithTitle:@"Error" message:@"You must enter a project name!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     } else {
-        PFObject *newProjectHours = [PFObject objectWithClassName:@"ProjectHours"];
-        newProjectHours[@"projectName"] = self.projectNameTextField.text;
-        newProjectHours[@"hoursWorked"] = @(selectedProjectHours);
-        newProjectHours[@"projectComplete"] = @(self.projectCompleteSwitch.isOn);
-        newProjectHours.ACL = [PFACL ACLWithUser:[PFUser currentUser]];
+        if (self.editProjectHoursPFObject == nil) {
+            projectHoursPFObject = [PFObject objectWithClassName:@"ProjectHours"];
+        } else {
+            projectHoursPFObject = self.editProjectHoursPFObject;
+        }
         
-        [newProjectHours saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        projectHoursPFObject[@"projectName"] = self.projectNameTextField.text;
+        projectHoursPFObject[@"hoursWorked"] = @(selectedProjectHours);
+        projectHoursPFObject[@"projectComplete"] = @(self.projectCompleteSwitch.isOn);
+        projectHoursPFObject.ACL = [PFACL ACLWithUser:[PFUser currentUser]];
+        
+        [projectHoursPFObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (error) {
                 [[[UIAlertView alloc] initWithTitle:@"Error" message:error.description delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
             } else {
