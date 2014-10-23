@@ -27,7 +27,7 @@ NSTimer *dataRefreshTimer = nil;
     [super viewDidLoad];
     
     UIBarButtonItem *addButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButton)];
-    UIBarButtonItem *refreshButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(getProjectHoursDataFromParse)];
+    UIBarButtonItem *refreshButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshButton)];
     
     self.navigationItem.rightBarButtonItems = [[NSArray alloc] initWithObjects:addButtonItem, refreshButtonItem, nil];
 }
@@ -37,6 +37,14 @@ NSTimer *dataRefreshTimer = nil;
     
     if ([self isInternetAvailable]) {
         [self.navigationController pushViewController:editProjectHoursViewController animated:YES];
+    } else {
+        [[[UIAlertView alloc] initWithTitle:@"Internet Connection Error" message:@"Please connect to the internet and try again!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    }
+}
+
+- (void)refreshButton {
+    if ([self isInternetAvailable]) {
+        [self getProjectHoursDataFromParse];
     } else {
         [[[UIAlertView alloc] initWithTitle:@"Internet Connection Error" message:@"Please connect to the internet and try again!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }
