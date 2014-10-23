@@ -22,6 +22,26 @@
 NSArray *projectHoursArray = nil;
 NSTimer *dataRefreshTimer = nil;
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    UIBarButtonItem *addButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButton)];
+    UIBarButtonItem *refreshButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(getProjectHoursDataFromParse)];
+    
+    self.navigationItem.rightBarButtonItems = [[NSArray alloc] initWithObjects:addButtonItem, refreshButtonItem, nil];
+}
+
+- (void)addButton {
+    AddProjectHoursViewController *editProjectHoursViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"AddProjectHoursViewController"];
+    
+    if ([self isInternetAvailable]) {
+        [self.navigationController pushViewController:editProjectHoursViewController animated:YES];
+    } else {
+        [[[UIAlertView alloc] initWithTitle:@"Internet Connection Error" message:@"Please connect to the internet and try again!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    }
+}
+
 - (BOOL)isInternetAvailable {
     Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
@@ -126,21 +146,13 @@ NSTimer *dataRefreshTimer = nil;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    [projectHoursArray[indexPath.row] deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        [self getProjectHoursDataFromParse];
-    }];
-}
-
--(BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
-    if ([identifier isEqualToString:@"ProjectHoursDetailSegue"]) {
-        if ([self isInternetAvailable] == NO) {
-            [[[UIAlertView alloc] initWithTitle:@"Internet Connection Error" message:@"Please connect to the internet and try again!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-            return false;
-        }
+    if ([self isInternetAvailable]) {
+        [projectHoursArray[indexPath.row] deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            [self getProjectHoursDataFromParse];
+        }];
+    } else {
+        [[[UIAlertView alloc] initWithTitle:@"Internet Connection Error" message:@"Please connect to the internet and try again!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }
-    
-    return true;
 }
-
 
 @end

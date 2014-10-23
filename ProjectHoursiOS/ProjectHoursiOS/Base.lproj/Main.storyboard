@@ -220,11 +220,6 @@
                                 <action selector="logoutButton:" destination="uTb-Pr-7yT" id="EbC-fU-1QU"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="iDx-bx-iae">
-                            <connections>
-                                <segue destination="MPh-gn-f8P" kind="show" identifier="ProjectHoursDetailSegue" id="9oL-6m-Z92"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
